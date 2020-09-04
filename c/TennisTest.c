@@ -8,7 +8,7 @@
 
 struct Parameter
 {
-    int player1Score;
+    int player1points;
     int player2Score;
     const char* expectedScore;
 };
@@ -23,9 +23,9 @@ static void checkScore(void** state)
     const struct Parameter* param = (struct Parameter*)cast_to_pointer_integral_type(*state);
     struct TennisGame* game = TennisGame_Create("player1", "player2");
 
-    for (int i = 0; i < maxScore(param->player1Score, param->player2Score); i++)
+    for (int i = 0; i < maxScore(param->player1points, param->player2Score); i++)
     {
-        if (i < param->player1Score)
+        if (i < param->player1points)
             TennisGame_WonPoint(game, "player1");
         if (i < param->player2Score)
             TennisGame_WonPoint(game, "player2");

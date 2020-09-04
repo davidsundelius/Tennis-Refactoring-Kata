@@ -6,7 +6,7 @@
 struct TennisGame
 {
     int m_score1;
-    int m_score2;
+    int player2points;
     const char* player1Name;
     const char* player2Name;
     char score[18];
@@ -16,7 +16,7 @@ struct TennisGame* TennisGame_Create(const char* player1Name, const char* player
 {
     struct TennisGame* newGame = malloc(sizeof(struct TennisGame));
     newGame->m_score1 = 0;
-    newGame->m_score2 = 0;
+    newGame->player2points = 0;
     newGame->player1Name = player1Name;
     newGame->player2Name = player2Name;
     return newGame;
@@ -27,14 +27,14 @@ void TennisGame_WonPoint(struct TennisGame* game, const char* playerName)
     if (strcmp(playerName, "player1") == 0)
         game->m_score1 += 1;
     else
-        game->m_score2 += 1;
+        game->player2points += 1;
 }
 
 const char* TennisGame_GetScore(struct TennisGame* game)
 {
     game->score[0] = '\0';
     int tempScore = 0;
-    if (game->m_score1 == game->m_score2)
+    if (game->m_score1 == game->player2points)
     {
         switch (game->m_score1)
         {
@@ -53,9 +53,9 @@ const char* TennisGame_GetScore(struct TennisGame* game)
 
         }
     }
-    else if (game->m_score1 >= 4 || game->m_score2 >= 4)
+    else if (game->m_score1 >= 4 || game->player2points >= 4)
     {
-        int minusResult = game->m_score1 - game->m_score2;
+        int minusResult = game->m_score1 - game->player2points;
         if (minusResult == 1)
             strcpy(game->score, "Advantage player1");
         else if (minusResult == -1)
@@ -70,7 +70,7 @@ const char* TennisGame_GetScore(struct TennisGame* game)
         for (int i = 1; i < 3; i++)
         {
             if (i == 1) tempScore = game->m_score1;
-            else { strcat(game->score, "-"); tempScore = game->m_score2; }
+            else { strcat(game->score, "-"); tempScore = game->player2points; }
             switch (tempScore)
             {
             case 0:
